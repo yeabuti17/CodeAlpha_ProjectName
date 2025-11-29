@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+int grid[9][9];
+
+// Check if a number can be placed in row, column, and 3x3 box
+bool isValid(int row, int col, int num) {
+
+    // Check row
+    for (int i = 0; i < 9; i++) {
+        if (grid[row][i] == num)
+            return false;
+    }
+
+    // Check column
+    for (int i = 0; i < 9; i++) {
+        if (grid[i][col] == num)
+            return false;
+    }
+
+    // Check 3x3 box
+    int startRow = row - row % 3;
+    int startCol = col - col % 3;
+
+    for (int r = 0; r < 3; r++) {
+        for (int c = 0; c < 3; c++) {
+            if (grid[startRow + r][startCol + c] == num)
+                return false;
+        }
+    }
+
+    return true;
+}
+
+// Backtracking function to solve Sudoku
+bool solveSudoku() {
+
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+
+            if (grid[row][col] == 0) {   // 0 means empty
+
+                // Try numbers 1–9
+                for (int num = 1; num <= 9; num++) {
+
+                    if (isValid(row, col, num)) {
+                        grid[row][col] = num;
+
+                        // Recursively try next cells
+                        if (solveSudoku())
+                            return true;
+
+                        // If not valid, reset and try next number
+                        grid[row][col] = 0;
+                    }
+                }
+
+                return false; // No valid number found
+            }
+        }
+    }
+
+    return true; // All cells filled
+}
+
+int main() {
+
+    cout << "Enter Sudoku (0 for empty cells):\n";
+
+    // Input Sudoku
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            cin >> grid[row][col];
+        }
+    }
+
+    if (solveSudoku()) {
+        cout << "\nSolved Sudoku:\n";
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                cout << grid[row][col] << " ";
+            }
+            cout << endl;
+        }
+    } 
+    else {
+        cout << "No solution exists.";
+    }
+
+    return 0;
+}
