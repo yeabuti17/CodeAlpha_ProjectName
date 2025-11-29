@@ -23,7 +23,7 @@ int main() {
         cout << "Enter password: ";
         cin >> password;
 
-        ofstream file(username + ".txt");
+        ofstream file(username + ".txt");//to create a file with a username
         file << username << endl;
         file << password;
         file.close();
@@ -41,7 +41,7 @@ int main() {
         cout << "Enter password: ";
         cin >> password;
 
-        ifstream file(username + ".txt");
+        ifstream file(username + ".txt");//to open the file that has the username as its name
 
         if (!file) {
             cout << "User does not exist!\n";
