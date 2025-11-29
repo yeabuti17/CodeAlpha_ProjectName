@@ -19,7 +19,7 @@ int main() {
         totalCredits += credit;
     }
 
-    double cgpa = totalPoints / totalCredits;
+    double cgpa = totalGradePoints / totalCredits;
     cout << "Your CGPA is: " << cgpa;
 
     return 0;
